@@ -27,6 +27,7 @@ RUN curl -o /root/memcached.zip https://github.com/php-memcached-dev/php-memcach
 
 # install php pdo_mysql
 RUN docker-php-ext-install pdo_mysql mysqli iconv mbstring json mcrypt opcache 
+RUN echo "opcache.enable_cli=1" >>  /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 
 # install dom xml
 #RUN apt-get install libxml2 && docker-php-ext-install dom simplexml xmlreader
