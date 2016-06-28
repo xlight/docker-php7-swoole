@@ -56,7 +56,8 @@ RUN curl -L -o /tmp/redis.tar.gz https://github.com/phpredis/phpredis/archive/$P
 # log to /var/www/log
 # RUN mkdir -p /var/www/log
 # RUN echo "error_log = /var/www/log/php_error.log" > /usr/local/etc/php/conf.d/log.ini
-RUN echo "log_errors = On" >> /usr/local/etc/php/conf.d/log.ini
+RUN echo "log_errors = On" >> /usr/local/etc/php/conf.d/log.ini \
+    && echo "error_log=/dev/stderr" >> /usr/local/etc/php/conf.d/log.ini
 
 
 # add user additional conf for apache & php
