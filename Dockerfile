@@ -45,13 +45,14 @@ RUN pecl install swoole
 RUN docker-php-ext-enable swoole
 
 #install redis
-ENV PHPREDIS_VERSION php7
-RUN curl -L -o /tmp/redis.tar.gz https://github.com/phpredis/phpredis/archive/$PHPREDIS_VERSION.tar.gz \
-    && tar xfz /tmp/redis.tar.gz \
-    && rm -r /tmp/redis.tar.gz \
-    && mv phpredis-$PHPREDIS_VERSION /usr/src/php/ext/redis \
-    && docker-php-ext-install redis
-
+# 
+#ENV PHPREDIS_VERSION php7
+#RUN curl -L -o /tmp/redis.tar.gz https://github.com/phpredis/phpredis/archive/$PHPREDIS_VERSION.tar.gz \
+#    && tar xfz /tmp/redis.tar.gz \
+#    && rm -r /tmp/redis.tar.gz \
+#    && mv phpredis-$PHPREDIS_VERSION /usr/src/php/ext/redis \
+#    && docker-php-ext-install redis
+RUN pecl install redis && docker-php-ext-enable redis
 
 # log to /var/www/log
 # RUN mkdir -p /var/www/log
