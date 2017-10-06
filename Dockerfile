@@ -8,6 +8,9 @@ RUN apt-get install -y \
         libjpeg62-turbo-dev \
         libmcrypt-dev \
         libpng12-dev \
+        openssl libssh-dev \
+        libnghttp2-dev \
+        libhiredis-dev \
     && docker-php-ext-install iconv mcrypt \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install gd
@@ -42,7 +45,12 @@ RUN echo "opcache.enable_cli=0" >>  /usr/local/etc/php/conf.d/docker-php-ext-opc
 # cd /root && rm -rf /root/libmemcached* 
 
 # install swoole
-RUN pecl install swoole
+#RUN pecl install swoole
+RUN cd /root && pecl download swoole && \
+    cd swoole-1* && \
+    phpize && \
+    ./configure --enable-openssl  --enable-http2  --enable-async-redis && \
+    make && make install 
 RUN docker-php-ext-enable swoole
 
 #install redis
@@ -70,3 +78,4 @@ RUN echo "log_errors = On" >> /usr/local/etc/php/conf.d/log.ini \
 # set system timezone & php timezone
 # @TODO
 
+RUN 
